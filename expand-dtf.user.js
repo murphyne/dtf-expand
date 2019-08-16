@@ -1,0 +1,200 @@
+// ==UserScript==
+// @name         DTF: Expand feed items
+// @namespace    http://tampermonkey.net/
+// @version      0.1.0
+// @description  Expand feed items!
+// @author       mr-m
+// @match        *://dtf.ru/*
+// @grant        none
+// ==/UserScript==
+
+;(async function dtfExpandFeed () {
+    "use strict";
+
+    //We need the pageWrapper to acquire feedContainer
+    const pageWrapper = document.getElementById('page_wrapper');
+    if (!pageWrapper) {
+        //It seems that a pageWrapper is always present on the page.
+        //Yet, if we are unable to find it, we can't continue.
+        console.error('ExpandDTF: pageWrapper not found');
+        return;
+    }
+
+    //While you browse the site, feedContainer can be deleted or added.
+    //That's why we need to track DOM mutations in pageWrapper.
+    const pageWrapperObserver = new MutationObserver(pageWrapperCallback);
+    pageWrapperObserver.observe(pageWrapper, {childList: true});
+
+    const feedContainerObserver = new MutationObserver(feedContainerCallback);
+
+    //More info on the lifetime of MutationObserver
+    //https://stackoverflow.com/q/35253565
+
+    //Check if feedContainer is already present on the page
+    const feedContainer = pageWrapper.getElementsByClassName('feed__container')[0];
+    if (feedContainer) {
+        console.log('ExpandDTF: feedContainer present %o', feedContainer);
+
+        //Augment existing feed items
+        const feedItems = Array.from(feedContainer.getElementsByClassName('feed__item'));
+        augmentFeedItems(feedItems);
+
+        //Wait for new feed items
+        feedContainerObserver.disconnect();
+        feedContainerObserver.observe(feedContainer, {childList: true});
+    }
+
+    function pageWrapperCallback (mutations) {
+        outer_loop:
+        for (let i = 0; i < mutations.length; i++) {
+            const mutation = mutations[i];
+            for (let j = 0; j < mutation.addedNodes.length; j++) {
+                const node = mutation.addedNodes[j];
+
+                if (node.nodeType !== Node.ELEMENT_NODE) continue;
+                const feedContainer = node.getElementsByClassName('feed__container')[0];
+                if (!feedContainer) continue;
+
+                console.log('ExpandDTF: feedContainer found %o', feedContainer);
+
+                //Augment existing feed items
+                const feedItems = Array.from(feedContainer.getElementsByClassName('feed__item'));
+                augmentFeedItems(feedItems);
+
+                //Wait for new feed items
+                feedContainerObserver.disconnect();
+                feedContainerObserver.observe(feedContainer, {childList: true});
+
+                break outer_loop;
+            }
+        }
+    }
+
+    function pageWrapperCallbackGenerator (mutations) {
+        for (let node of traverseAddedNodes(mutations)) {
+
+            if (node.nodeType !== Node.ELEMENT_NODE) continue;
+            const feedContainer = node.getElementsByClassName('feed__container')[0];
+            if (!feedContainer) continue;
+
+            console.log('ExpandDTF: feedContainer found %o', feedContainer);
+
+            //Augment existing feed items
+            const feedItems = Array.from(feedContainer.getElementsByClassName('feed__item'));
+            augmentFeedItems(feedItems);
+
+            //Wait for new feed items
+            feedContainerObserver.disconnect();
+            feedContainerObserver.observe(feedContainer, {childList: true});
+
+            break;
+        }
+    }
+
+    function feedContainerCallback (mutations) {
+        outer_loop:
+        for (let i = 0; i < mutations.length; i++) {
+            const mutation = mutations[i];
+            for (let j = 0; j < mutation.addedNodes.length; j++) {
+                const node = mutation.addedNodes[j];
+
+                //Augment new feed items
+                const feedItems = Array.from(node.getElementsByClassName('feed__item'));
+                augmentFeedItems(feedItems);
+
+                break outer_loop;
+            }
+        }
+    }
+
+    function feedContainerCallbackGenerator (mutations) {
+        for (let node of traverseAddedNodes(mutations)) {
+
+            //Augment new feed items
+            const feedItems = Array.from(node.getElementsByClassName('feed__item'));
+            augmentFeedItems(feedItems);
+
+            break;
+        }
+    }
+
+    function* traverseAddedNodes (mutations) {
+        for (let i = 0; i < mutations.length; i++) {
+            const mutation = mutations[i];
+            for (let j = 0; j < mutation.addedNodes.length; j++) {
+                const node = mutation.addedNodes[j];
+                yield node;
+            }
+        }
+    }
+
+})();
+
+async function augmentFeedItems (items) {
+    const promises = items.map(function (feedItem) {
+        return new Promise(async function (resolve) {
+            augmentConsole(feedItem);
+            await augmentWithContent(feedItem);
+            resolve();
+        });
+    });
+    await Promise.all(promises);
+
+    //Apparently quiz module is initialized before augmentation fulfills.
+    //Here, we force the module to initialize again after the augmentation.
+    window.Air.get("module.quiz").init();
+}
+
+function augmentConsole (item) {
+    console.log('ExpandDTF: item %o', item);
+}
+
+async function augmentWithContent (item) {
+    var itemContent = item.getElementsByClassName('entry_content--short')[0];
+    var itemLink = item.getElementsByClassName('entry_content__link')[0];
+    var itemHeader = item.getElementsByTagName('h2')[0];
+
+    var responseContent = await retrieveContentFromApi(itemLink.href);
+
+    itemHeader.nextElementSibling && itemHeader.nextElementSibling.remove();
+    itemHeader.nextElementSibling && itemHeader.nextElementSibling.remove();
+    itemContent.insertAdjacentElement('afterend', responseContent);
+}
+
+async function retrieveContentFromSite (itemLink) {
+    var response = await fetch(itemLink);
+    if (response.ok) {
+        var responseText = await response.text();
+        var responseDoc = new DOMParser().parseFromString(responseText, 'text/html');
+        var responseContent = responseDoc.getElementsByClassName('entry_content--full')[0];
+
+        responseContent.getElementsByClassName('l-fa-center')[0] &&
+            responseContent.getElementsByClassName('l-fa-center')[0].remove();
+
+        responseContent.classList.remove('entry_content--full');
+        responseContent.classList.add('entry_content--short');
+
+        return responseContent;
+    }
+    else {
+        console.error('ExpandDTF: fetch failed ' + response.status);
+    }
+}
+
+async function retrieveContentFromApi (itemLink) {
+    var response = await fetch(`https://api.dtf.ru/v1.8/entry/locate?url=${itemLink}`);
+    if (response.ok) {
+        var responseJson = await response.json();
+        var responseText = responseJson.result.entryContent.html;
+        var responseDoc = new DOMParser().parseFromString(responseText, 'text/html');
+        var responseContent = responseDoc.getElementsByClassName('entry_content--full')[0];
+
+        responseContent.classList.remove('entry_content--full');
+        responseContent.classList.add('entry_content--short');
+
+        return responseContent;
+    }
+    else {
+        console.error('ExpandDTF: fetch failed ' + response.status);
+    }
+}
