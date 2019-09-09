@@ -92,7 +92,6 @@
     }
 
     function feedContainerCallback (mutations) {
-        outer_loop:
         for (let i = 0; i < mutations.length; i++) {
             const mutation = mutations[i];
             for (let j = 0; j < mutation.addedNodes.length; j++) {
@@ -101,8 +100,6 @@
                 //Augment new feed items
                 const feedItems = Array.from(node.getElementsByClassName('feed__item'));
                 augmentFeedItems(feedItems);
-
-                break outer_loop;
             }
         }
     }
@@ -113,8 +110,6 @@
             //Augment new feed items
             const feedItems = Array.from(node.getElementsByClassName('feed__item'));
             augmentFeedItems(feedItems);
-
-            break;
         }
     }
 
@@ -127,7 +122,6 @@
             }
         }
     }
-
 })();
 
 async function augmentFeedItems (items) {
