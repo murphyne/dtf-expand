@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DTF: Expand feed items
 // @namespace    http://tampermonkey.net/
-// @version      0.1.0
+// @version      0.2.0
 // @description  Expand feed items!
 // @author       mr-m
 // @match        *://dtf.ru/*
@@ -144,9 +144,9 @@ function augmentConsole (item) {
 }
 
 async function augmentWithContent (item) {
-    var itemContent = item.getElementsByClassName('entry_content--short')[0];
-    var itemLink = item.getElementsByClassName('entry_content__link')[0];
-    var itemHeader = item.getElementsByTagName('h2')[0];
+    var itemContent = item.getElementsByClassName('content')[0];
+    var itemLink = item.getElementsByClassName('content-feed__link')[0];
+    var itemHeader = item.getElementsByClassName('content-header')[0];
 
     var responseContent = await retrieveContentFromApi(itemLink.href);
 
@@ -160,13 +160,13 @@ async function retrieveContentFromSite (itemLink) {
     if (response.ok) {
         var responseText = await response.text();
         var responseDoc = new DOMParser().parseFromString(responseText, 'text/html');
-        var responseContent = responseDoc.getElementsByClassName('entry_content--full')[0];
+        var responseContent = responseDoc.getElementsByClassName('content--full')[0];
 
         responseContent.getElementsByClassName('l-fa-center')[0] &&
             responseContent.getElementsByClassName('l-fa-center')[0].remove();
 
-        responseContent.classList.remove('entry_content--full');
-        responseContent.classList.add('entry_content--short');
+        responseContent.classList.remove('content--full');
+        responseContent.classList.add('content--short');
 
         return responseContent;
     }
@@ -181,10 +181,10 @@ async function retrieveContentFromApi (itemLink) {
         var responseJson = await response.json();
         var responseText = responseJson.result.entryContent.html;
         var responseDoc = new DOMParser().parseFromString(responseText, 'text/html');
-        var responseContent = responseDoc.getElementsByClassName('entry_content--full')[0];
+        var responseContent = responseDoc.getElementsByClassName('content--full')[0];
 
-        responseContent.classList.remove('entry_content--full');
-        responseContent.classList.add('entry_content--short');
+        responseContent.classList.remove('content--full');
+        responseContent.classList.add('content--short');
 
         return responseContent;
     }
