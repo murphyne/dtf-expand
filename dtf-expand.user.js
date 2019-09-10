@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DTF: Expand feed items
 // @namespace    http://tampermonkey.net/
-// @version      0.2.2
+// @version      0.3.0
 // @description  Expand feed items!
 // @author       mr-m
 // @match        *://dtf.ru/*
@@ -124,26 +124,31 @@
     }
 })();
 
-async function augmentFeedItems (items) {
-    const promises = items.map(function (feedItem) {
-        return new Promise(async function (resolve) {
-            augmentConsole(feedItem);
-            await augmentWithContent(feedItem);
-            resolve();
-        });
-    });
-    await Promise.all(promises);
-
-    //Apparently quiz module is initialized before augmentation fulfills.
-    //Here, we force the module to initialize again after the augmentation.
-    window.Air.get("module.quiz").init();
+function toChunks (arr, chunkSize) {
+    const result = [];
+    for (let i = 0; i < arr.length; i += chunkSize) {
+        result.push(arr.slice(i, i + chunkSize));
+    }
+    return result;
 }
 
-function augmentConsole (item) {
-    console.log('ExpandDTF: item %o', item);
+async function augmentFeedItems (items) {
+    for (let chunk of toChunks(items, 3)) {
+        const promises = chunk.map(function (feedItem) {
+            return augmentWithContent(feedItem)
+                .catch(function (reason) { return reason; });
+        });
+        await Promise.all(promises);
+
+        //Apparently quiz module is initialized before augmentation fulfills.
+        //Here, we force the module to initialize again after the augmentation.
+        window.Air.get("module.quiz").init();
+    }
 }
 
 async function augmentWithContent (item) {
+    console.log('ExpandDTF: item %o', item);
+
     var itemContent = item.getElementsByClassName('content')[0];
     var itemHeader = item.getElementsByClassName('content-header')[0];
     var itemTitle = item.getElementsByClassName('content-header__title')[0];
