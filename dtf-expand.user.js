@@ -165,38 +165,28 @@ async function augmentWithContent (item) {
 
 async function retrieveContentFromSite (itemLink) {
     var response = await fetch(itemLink);
-    if (response.ok) {
-        var responseText = await response.text();
-        var responseDoc = new DOMParser().parseFromString(responseText, 'text/html');
-        var responseContent = responseDoc.getElementsByClassName('content--full')[0];
+    var responseText = await response.text();
+    var responseDoc = new DOMParser().parseFromString(responseText, 'text/html');
+    var responseContent = responseDoc.getElementsByClassName('content--full')[0];
 
-        responseContent.getElementsByClassName('l-fa-center')[0] &&
-            responseContent.getElementsByClassName('l-fa-center')[0].remove();
+    responseContent.getElementsByClassName('l-fa-center')[0] &&
+        responseContent.getElementsByClassName('l-fa-center')[0].remove();
 
-        responseContent.classList.remove('content--full');
-        responseContent.classList.add('content--short');
+    responseContent.classList.remove('content--full');
+    responseContent.classList.add('content--short');
 
-        return responseContent;
-    }
-    else {
-        console.error('ExpandDTF: fetch failed ' + response.status);
-    }
+    return responseContent;
 }
 
 async function retrieveContentFromApi (itemLink) {
     var response = await fetch(`https://api.dtf.ru/v1.8/entry/locate?url=${itemLink}`);
-    if (response.ok) {
-        var responseJson = await response.json();
-        var responseText = responseJson.result.entryContent.html;
-        var responseDoc = new DOMParser().parseFromString(responseText, 'text/html');
-        var responseContent = responseDoc.getElementsByClassName('content--full')[0];
+    var responseJson = await response.json();
+    var responseText = responseJson.result.entryContent.html;
+    var responseDoc = new DOMParser().parseFromString(responseText, 'text/html');
+    var responseContent = responseDoc.getElementsByClassName('content--full')[0];
 
-        responseContent.classList.remove('content--full');
-        responseContent.classList.add('content--short');
+    responseContent.classList.remove('content--full');
+    responseContent.classList.add('content--short');
 
-        return responseContent;
-    }
-    else {
-        console.error('ExpandDTF: fetch failed ' + response.status);
-    }
+    return responseContent;
 }
