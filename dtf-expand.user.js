@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DTF: Expand feed items
 // @namespace    http://tampermonkey.net/
-// @version      0.2.1
+// @version      0.2.2
 // @description  Expand feed items!
 // @author       mr-m
 // @match        *://dtf.ru/*
@@ -145,13 +145,17 @@ function augmentConsole (item) {
 
 async function augmentWithContent (item) {
     var itemContent = item.getElementsByClassName('content')[0];
-    var itemLink = item.getElementsByClassName('content-feed__link')[0];
     var itemHeader = item.getElementsByClassName('content-header')[0];
+    var itemTitle = item.getElementsByClassName('content-header__title')[0];
+    var itemLink = item.getElementsByClassName('content-feed__link')[0];
 
     var responseContent = await retrieveContentFromApi(itemLink.href);
 
     itemContent.remove();
     itemHeader.insertAdjacentElement('afterend', responseContent);
+    itemLink.classList.remove('content-feed__link');
+    itemHeader.insertAdjacentElement('beforeend', itemLink);
+    itemLink.insertAdjacentElement('afterbegin', itemTitle);
 }
 
 async function retrieveContentFromSite (itemLink) {
