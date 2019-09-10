@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DTF: Expand feed items
 // @namespace    http://tampermonkey.net/
-// @version      0.2.0
+// @version      0.2.1
 // @description  Expand feed items!
 // @author       mr-m
 // @match        *://dtf.ru/*
@@ -150,9 +150,8 @@ async function augmentWithContent (item) {
 
     var responseContent = await retrieveContentFromApi(itemLink.href);
 
-    itemHeader.nextElementSibling && itemHeader.nextElementSibling.remove();
-    itemHeader.nextElementSibling && itemHeader.nextElementSibling.remove();
-    itemContent.insertAdjacentElement('afterend', responseContent);
+    itemContent.remove();
+    itemHeader.insertAdjacentElement('afterend', responseContent);
 }
 
 async function retrieveContentFromSite (itemLink) {
