@@ -1,0 +1,14 @@
+{
+  "name": "dtf-expand",
+  "version": "0.3.0",
+  "description": "Expand feed items!",
+  "author": "mr-m",
+  "license": "ISC",
+  "main": "./src/main.js",
+  "devDependencies": {
+    "rollup": "^1.21.1"
+  },
+  "scripts": {
+    "build": "rollup -c rollup.conf.js"
+  }
+}
