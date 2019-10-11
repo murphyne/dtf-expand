@@ -130,9 +130,10 @@ async function augmentFeedItems (items) {
     });
     await Promise.all(promises);
 
-    //Apparently quiz module is initialized before augmentation fulfills.
-    //Here, we force the module to initialize again after the augmentation.
-    window.Air.get("module.quiz").init();
+    //Apparently Air modules are run before augmentation fulfills.
+    //Here, we force the modules to run again after the augmentation.
+    window.Air.get("module.quiz").refresh();
+    window.Air.get("module.andropov").refresh();
   }
 }
 
