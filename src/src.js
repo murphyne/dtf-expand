@@ -1,4 +1,4 @@
-;(async function dtfExpandFeed () {
+export default async function dtfExpandFeed () {
   "use strict";
 
   //We need the pageWrapper to acquire feedContainer
@@ -112,7 +112,7 @@
       }
     }
   }
-})();
+}
 
 function toChunks (arr, chunkSize) {
   const result = [];
