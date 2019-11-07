@@ -11,7 +11,7 @@ let bannerText = `
 `;
 
 module.exports = {
-  input: 'src/src.js',
+  input: 'src/main.js',
   output: {
     file: 'dist/dtf-expand.user.js',
     format: 'esm',

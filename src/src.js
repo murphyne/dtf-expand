@@ -1,4 +1,8 @@
-export default async function dtfExpandFeed () {
+export {
+  dtfExpandFeed,
+};
+
+async function dtfExpandFeed () {
   "use strict";
 
   //We need the pageWrapper to acquire feedContainer
