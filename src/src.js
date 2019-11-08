@@ -2,6 +2,10 @@ export {
   dtfExpandFeed,
 };
 
+import {
+  retrieveContentFromApi,
+} from '../src/retrieve-api.js';
+
 async function dtfExpandFeed () {
   "use strict";
 
@@ -168,32 +172,4 @@ async function augmentWithContent (item) {
   itemLink.classList.remove('content-feed__link');
   itemHeader.insertAdjacentElement('beforeend', itemLink);
   itemLink.insertAdjacentElement('afterbegin', itemTitle);
-}
-
-async function retrieveContentFromSite (itemLink) {
-  var response = await fetch(itemLink);
-  var responseText = await response.text();
-  var responseDoc = new DOMParser().parseFromString(responseText, 'text/html');
-  var responseContent = responseDoc.getElementsByClassName('content--full')[0];
-
-  responseContent.getElementsByClassName('l-fa-center')[0] &&
-    responseContent.getElementsByClassName('l-fa-center')[0].remove();
-
-  responseContent.classList.remove('content--full');
-  responseContent.classList.add('content--short');
-
-  return responseContent;
-}
-
-async function retrieveContentFromApi (itemLink) {
-  var response = await fetch(`https://api.dtf.ru/v1.8/entry/locate?url=${itemLink}`);
-  var responseJson = await response.json();
-  var responseText = responseJson.result.entryContent.html;
-  var responseDoc = new DOMParser().parseFromString(responseText, 'text/html');
-  var responseContent = responseDoc.getElementsByClassName('content--full')[0];
-
-  responseContent.classList.remove('content--full');
-  responseContent.classList.add('content--short');
-
-  return responseContent;
 }
