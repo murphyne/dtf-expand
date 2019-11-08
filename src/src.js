@@ -118,14 +118,6 @@ async function dtfExpandFeed () {
   }
 }
 
-function toChunks (arr, chunkSize) {
-  const result = [];
-  for (let i = 0; i < arr.length; i += chunkSize) {
-    result.push(arr.slice(i, i + chunkSize));
-  }
-  return result;
-}
-
 function augmentFeedItems (items) {
   items.forEach(async function (feedItem) {
     let html = `
