@@ -3,15 +3,15 @@ export {
 }
 
 /**
- * @param {string} itemLink
+ * @param {string} itemUrl
  * @returns {Promise<Element>}
  * @throws {TypeError}
  */
-async function retrieveContentFromSite (itemLink) {
-  var response = await fetch(itemLink);
+async function retrieveContentFromSite (itemUrl) {
+  var response = await fetch(itemUrl);
   var responseText = await response.text();
-  var responseDoc = new DOMParser().parseFromString(responseText, 'text/html');
-  var responseContent = responseDoc.getElementsByClassName('content--full')[0];
+  var responseDom = new DOMParser().parseFromString(responseText, 'text/html');
+  var responseContent = responseDom.getElementsByClassName('content--full')[0];
 
   responseContent.getElementsByClassName('l-fa-center')[0] &&
     responseContent.getElementsByClassName('l-fa-center')[0].remove();
