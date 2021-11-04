@@ -1,9 +1,10 @@
 import virtual from '@rollup/plugin-virtual';
+import pkg from './package.json';
 
 let bannerText = `
 // ==UserScript==
 // @name         DTF: Expand feed items
-// @version      0.7.2
+// @version      ${pkg.version}
 // @description  Expand feed items!
 // @license      MIT
 // @author       murphyne
