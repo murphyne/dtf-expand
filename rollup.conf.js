@@ -5,6 +5,7 @@ let bannerText = `
 // @name         DTF: Expand feed items
 // @version      0.7.2
 // @description  Expand feed items!
+// @license      MIT
 // @author       murphyne
 // @namespace    https://github.com/murphyne
 // @match        *://dtf.ru/*

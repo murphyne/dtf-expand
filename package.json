@@ -3,7 +3,7 @@
   "version": "0.7.2",
   "description": "Expand feed items!",
   "author": "murphyne",
-  "license": "ISC",
+  "license": "MIT",
   "browser": "./src/main.js",
   "devDependencies": {
     "@rollup/plugin-virtual": "^2.0.3",
