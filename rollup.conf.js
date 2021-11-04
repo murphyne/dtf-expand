@@ -8,6 +8,8 @@ let bannerText = `
 // @author       murphyne
 // @namespace    https://github.com/murphyne
 // @match        *://dtf.ru/*
+// @updateUrl    https://github.com/murphyne/dtf-expand/releases/latest/download/dtf-expand.meta.js
+// @downloadUrl  https://github.com/murphyne/dtf-expand/releases/latest/download/dtf-expand.user.js
 // @grant        GM_addStyle
 // ==/UserScript==
 `;
