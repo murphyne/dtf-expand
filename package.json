@@ -4,7 +4,7 @@
   "description": "Expand feed items!",
   "author": "mr-m",
   "license": "ISC",
-  "main": "./src/main.js",
+  "browser": "./src/main.js",
   "devDependencies": {
     "rollup": "^1.21.1"
   },
