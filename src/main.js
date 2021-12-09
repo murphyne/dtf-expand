@@ -1,5 +1,5 @@
 import {
   dtfExpandFeed,
-} from '../src/src.js';
+} from './index.js';
 
 dtfExpandFeed();
