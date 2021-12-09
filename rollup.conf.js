@@ -1,10 +1,10 @@
 let bannerText = `
 // ==UserScript==
 // @name         DTF: Expand feed items
-// @namespace    http://tampermonkey.net/
 // @version      0.4.0
 // @description  Expand feed items!
 // @author       murphyne
+// @namespace    https://github.com/murphyne
 // @match        *://dtf.ru/*
 // @grant        none
 // ==/UserScript==
