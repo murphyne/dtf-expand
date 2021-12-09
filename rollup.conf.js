@@ -4,7 +4,7 @@ let bannerText = `
 // @namespace    http://tampermonkey.net/
 // @version      0.4.0
 // @description  Expand feed items!
-// @author       mr-m
+// @author       murphyne
 // @match        *://dtf.ru/*
 // @grant        none
 // ==/UserScript==

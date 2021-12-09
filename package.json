@@ -2,7 +2,7 @@
   "name": "dtf-expand",
   "version": "0.4.0",
   "description": "Expand feed items!",
-  "author": "mr-m",
+  "author": "murphyne",
   "license": "ISC",
   "browser": "./src/main.js",
   "devDependencies": {
