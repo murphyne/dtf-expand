@@ -10,5 +10,13 @@
   },
   "scripts": {
     "build": "rollup -c rollup.conf.js"
+  },
+  "homepage": "https://github.com/murphyne/dtf-expand",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/murphyne/dtf-expand.git"
+  },
+  "bugs": {
+    "url": "https://github.com/murphyne/dtf-expand/issues"
   }
 }
