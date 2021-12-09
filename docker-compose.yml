@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+
+  dev:
+    image: node:14
+    command: bash
+    working_dir: /usr/src/app
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules/
+    environment:
+      - NODE_ENV=development
+      - SELENIUM_REMOTE_URL=http://chrome:4444/wd/hub
+    depends_on:
+      - chrome
+
+  chrome:
+    image: selenium/standalone-chrome:95.0
+    shm_size: 2g
+    working_dir: /usr/src/app
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "4444:4444"
