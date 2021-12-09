@@ -10,7 +10,7 @@ let bannerText = `
 // ==/UserScript==
 `;
 
-module.exports = {
+export default {
   input: 'src/main.js',
   output: {
     file: 'dist/dtf-expand.user.js',
