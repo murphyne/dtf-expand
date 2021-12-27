@@ -1,3 +1,5 @@
+import virtual from '@rollup/plugin-virtual';
+
 let bannerText = `
 // ==UserScript==
 // @name         DTF: Expand feed items
@@ -10,11 +12,24 @@ let bannerText = `
 // ==/UserScript==
 `;
 
-export default {
-  input: 'src/main.js',
-  output: {
-    file: 'dist/dtf-expand.user.js',
-    format: 'esm',
-    banner: bannerText.trimStart(),
+export default [
+  {
+    input: 'src/main.js',
+    output: {
+      file: 'dist/dtf-expand.user.js',
+      format: 'esm',
+      banner: bannerText.trimStart(),
+    },
   },
-};
+  {
+    input: 'entry',
+    plugins: [
+      virtual({ entry: '' }),
+    ],
+    output: {
+      file: 'dist/dtf-expand.meta.js',
+      format: 'esm',
+      banner: bannerText.trim(),
+    },
+  },
+];
