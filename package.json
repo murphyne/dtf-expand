@@ -6,6 +6,7 @@
   "license": "ISC",
   "browser": "./src/main.js",
   "devDependencies": {
+    "@rollup/plugin-virtual": "^2.0.3",
     "rollup": "^1.21.1"
   },
   "scripts": {
