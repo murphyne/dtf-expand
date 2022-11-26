@@ -35,9 +35,7 @@ async function dtfExpandFeed () {
 
     processFeedItems(feedContainer);
 
-    //Wait for new feed items
-    feedContainerObserver.disconnect();
-    feedContainerObserver.observe(feedContainer, {childList: true});
+    observeFeedItems(feedContainer);
   }
 
   function pageWrapperCallback (mutations) {
@@ -55,9 +53,7 @@ async function dtfExpandFeed () {
 
         processFeedItems(feedContainer);
 
-        //Wait for new feed items
-        feedContainerObserver.disconnect();
-        feedContainerObserver.observe(feedContainer, {childList: true});
+        observeFeedItems(feedContainer);
 
         break outer_loop;
       }
@@ -75,9 +71,7 @@ async function dtfExpandFeed () {
 
       processFeedItems(feedContainer);
 
-      //Wait for new feed items
-      feedContainerObserver.disconnect();
-      feedContainerObserver.observe(feedContainer, {childList: true});
+      observeFeedItems(feedContainer);
 
       break;
     }
@@ -116,5 +110,14 @@ async function dtfExpandFeed () {
   function processFeedItems (node) {
     const feedItems = Array.from(node.getElementsByClassName('feed__item'));
     augmentFeedItems(feedItems);
+  }
+
+  /**
+   * Wait for new feed items to appear in node
+   * @param {Element} node
+   */
+  function observeFeedItems (node) {
+    feedContainerObserver.disconnect();
+    feedContainerObserver.observe(node, {childList: true});
   }
 }
