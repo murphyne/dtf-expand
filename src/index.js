@@ -38,7 +38,11 @@ async function dtfExpandFeed () {
     observeFeedItems(feedContainer);
   }
 
-  function pageWrapperCallback (mutations) {
+  /**
+   * @param {MutationRecord[]} mutations
+   * @param {MutationObserver} observer
+   */
+  function pageWrapperCallback (mutations, observer) {
     outer_loop:
     for (let i = 0; i < mutations.length; i++) {
       const mutation = mutations[i];
@@ -60,7 +64,11 @@ async function dtfExpandFeed () {
     }
   }
 
-  function pageWrapperCallbackGenerator (mutations) {
+  /**
+   * @param {MutationRecord[]} mutations
+   * @param {MutationObserver} observer
+   */
+  function pageWrapperCallbackGenerator (mutations, observer) {
     for (let node of traverseAddedNodes(mutations)) {
 
       if (node.nodeType !== Node.ELEMENT_NODE) continue;
@@ -77,7 +85,11 @@ async function dtfExpandFeed () {
     }
   }
 
-  function feedContainerCallback (mutations) {
+  /**
+   * @param {MutationRecord[]} mutations
+   * @param {MutationObserver} observer
+   */
+  function feedContainerCallback (mutations, observer) {
     for (let i = 0; i < mutations.length; i++) {
       const mutation = mutations[i];
       for (let j = 0; j < mutation.addedNodes.length; j++) {
@@ -87,7 +99,11 @@ async function dtfExpandFeed () {
     }
   }
 
-  function feedContainerCallbackGenerator (mutations) {
+  /**
+   * @param {MutationRecord[]} mutations
+   * @param {MutationObserver} observer
+   */
+  function feedContainerCallbackGenerator (mutations, observer) {
     for (let node of traverseAddedNodes(mutations)) {
       processFeedItems(node);
     }
