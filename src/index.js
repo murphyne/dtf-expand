@@ -6,11 +6,17 @@ import {
   augmentFeedItems,
 } from '../src/augment.js';
 
+const config = {
+  idPageWrapper: 'page_wrapper',
+  classFeedContainer: 'feed__container',
+  classFeedItem: 'feed__item',
+};
+
 async function dtfExpandFeed () {
   "use strict";
 
   //We need the pageWrapper to acquire feedContainer
-  const pageWrapper = document.getElementById('page_wrapper');
+  const pageWrapper = document.getElementById(config.idPageWrapper);
   if (!pageWrapper) {
     //It seems that a pageWrapper is always present on the page.
     //Yet, if we are unable to find it, we can't continue.
@@ -29,7 +35,7 @@ async function dtfExpandFeed () {
   //https://stackoverflow.com/q/35253565
 
   //Check if feedContainer is already present on the page
-  const feedContainer = pageWrapper.getElementsByClassName('feed__container')[0];
+  const feedContainer = pageWrapper.getElementsByClassName(config.classFeedContainer)[0];
   if (feedContainer) {
     console.log('ExpandDTF: feedContainer found %o', feedContainer);
 
@@ -51,7 +57,7 @@ async function dtfExpandFeed () {
 
         if (node.nodeType !== Node.ELEMENT_NODE) continue;
 
-        const feedContainer = node.getElementsByClassName('feed__container')[0];
+        const feedContainer = node.getElementsByClassName(config.classFeedContainer)[0];
         if (feedContainer) {
           console.log('ExpandDTF: feedContainer found %o', feedContainer);
 
@@ -74,7 +80,7 @@ async function dtfExpandFeed () {
 
       if (node.nodeType !== Node.ELEMENT_NODE) continue;
 
-      const feedContainer = node.getElementsByClassName('feed__container')[0];
+      const feedContainer = node.getElementsByClassName(config.classFeedContainer)[0];
       if (feedContainer) {
         console.log('ExpandDTF: feedContainer found %o', feedContainer);
 
@@ -150,6 +156,6 @@ async function dtfExpandFeed () {
    * @returns {Element[]}
    */
   function getFeedItems (node) {
-    return Array.from(node.getElementsByClassName('feed__item'));
+    return Array.from(node.getElementsByClassName(config.classFeedItem));
   }
 }
