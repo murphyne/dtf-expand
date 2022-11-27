@@ -47,14 +47,16 @@ async function augmentWithContent (item) {
 
   var itemContent = item.getElementsByClassName('content')[0];
   var itemHeader = item.getElementsByClassName('content-header')[0];
-  var itemTitle = item.getElementsByClassName('content-header__title')[0];
-  var itemLink = item.getElementsByClassName('content-feed__link')[0];
+  var itemTitle = item.getElementsByClassName('content-title')[0];
+  var itemLink = item.getElementsByClassName('content-link')[0];
 
   var responseContent = await retrieveContentFromApi(itemLink.href);
 
   itemContent.remove();
+  responseContent.classList.remove('content--short');
+  responseContent.classList.add('content--full');
   itemHeader.insertAdjacentElement('afterend', responseContent);
-  itemLink.classList.remove('content-feed__link');
-  itemHeader.insertAdjacentElement('beforeend', itemLink);
+  itemLink.classList.remove('content-link');
+  itemHeader.insertAdjacentElement('afterend', itemLink);
   itemLink.insertAdjacentElement('afterbegin', itemTitle);
 }
