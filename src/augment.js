@@ -16,6 +16,10 @@ const config = {
   classItemLink: 'content-link',
 };
 
+/**
+ * @param {Array<Element>} items
+ * @returns {Array<Promise>}
+ */
 function augmentFeedItems (items) {
   items.forEach(async function (feedItem) {
     let html = `
@@ -51,6 +55,10 @@ function augmentFeedItems (items) {
   });
 }
 
+/**
+ * @param {Element} item
+ * @throws {TypeError}
+ */
 async function augmentWithContent (item) {
   console.log('ExpandDTF: item %o', item);
 
