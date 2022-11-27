@@ -111,6 +111,11 @@ async function dtfExpandFeed () {
     }
   }
 
+  /**
+   * Unwrap mutations array into nodes array
+   * @param {MutationRecord[]} mutations
+   * @yields {Node}
+   */
   function* traverseAddedNodes (mutations) {
     for (let i = 0; i < mutations.length; i++) {
       const mutation = mutations[i];
