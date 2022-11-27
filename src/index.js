@@ -31,7 +31,7 @@ async function dtfExpandFeed () {
   //Check if feedContainer is already present on the page
   const feedContainer = pageWrapper.getElementsByClassName('feed__container')[0];
   if (feedContainer) {
-    console.log('ExpandDTF: feedContainer present %o', feedContainer);
+    console.log('ExpandDTF: feedContainer found %o', feedContainer);
 
     processFeedItems(feedContainer);
 
@@ -50,16 +50,17 @@ async function dtfExpandFeed () {
         const node = mutation.addedNodes[j];
 
         if (node.nodeType !== Node.ELEMENT_NODE) continue;
+
         const feedContainer = node.getElementsByClassName('feed__container')[0];
-        if (!feedContainer) continue;
+        if (feedContainer) {
+          console.log('ExpandDTF: feedContainer found %o', feedContainer);
 
-        console.log('ExpandDTF: feedContainer found %o', feedContainer);
+          processFeedItems(feedContainer);
 
-        processFeedItems(feedContainer);
+          observeFeedItems(feedContainer);
 
-        observeFeedItems(feedContainer);
-
-        break outer_loop;
+          break outer_loop;
+        }
       }
     }
   }
@@ -72,16 +73,17 @@ async function dtfExpandFeed () {
     for (let node of traverseAddedNodes(mutations)) {
 
       if (node.nodeType !== Node.ELEMENT_NODE) continue;
+
       const feedContainer = node.getElementsByClassName('feed__container')[0];
-      if (!feedContainer) continue;
+      if (feedContainer) {
+        console.log('ExpandDTF: feedContainer found %o', feedContainer);
 
-      console.log('ExpandDTF: feedContainer found %o', feedContainer);
+        processFeedItems(feedContainer);
 
-      processFeedItems(feedContainer);
+        observeFeedItems(feedContainer);
 
-      observeFeedItems(feedContainer);
-
-      break;
+        break;
+      }
     }
   }
 
