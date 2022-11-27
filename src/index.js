@@ -33,9 +33,7 @@ async function dtfExpandFeed () {
   if (feedContainer) {
     console.log('ExpandDTF: feedContainer present %o', feedContainer);
 
-    //Augment existing feed items
-    const feedItems = Array.from(feedContainer.getElementsByClassName('feed__item'));
-    augmentFeedItems(feedItems);
+    processFeedItems(feedContainer);
 
     //Wait for new feed items
     feedContainerObserver.disconnect();
@@ -55,9 +53,7 @@ async function dtfExpandFeed () {
 
         console.log('ExpandDTF: feedContainer found %o', feedContainer);
 
-        //Augment existing feed items
-        const feedItems = Array.from(feedContainer.getElementsByClassName('feed__item'));
-        augmentFeedItems(feedItems);
+        processFeedItems(feedContainer);
 
         //Wait for new feed items
         feedContainerObserver.disconnect();
@@ -77,9 +73,7 @@ async function dtfExpandFeed () {
 
       console.log('ExpandDTF: feedContainer found %o', feedContainer);
 
-      //Augment existing feed items
-      const feedItems = Array.from(feedContainer.getElementsByClassName('feed__item'));
-      augmentFeedItems(feedItems);
+      processFeedItems(feedContainer);
 
       //Wait for new feed items
       feedContainerObserver.disconnect();
@@ -94,20 +88,14 @@ async function dtfExpandFeed () {
       const mutation = mutations[i];
       for (let j = 0; j < mutation.addedNodes.length; j++) {
         const node = mutation.addedNodes[j];
-
-        //Augment new feed items
-        const feedItems = Array.from(node.getElementsByClassName('feed__item'));
-        augmentFeedItems(feedItems);
+        processFeedItems(node);
       }
     }
   }
 
   function feedContainerCallbackGenerator (mutations) {
     for (let node of traverseAddedNodes(mutations)) {
-
-      //Augment new feed items
-      const feedItems = Array.from(node.getElementsByClassName('feed__item'));
-      augmentFeedItems(feedItems);
+      processFeedItems(node);
     }
   }
 
@@ -119,5 +107,14 @@ async function dtfExpandFeed () {
         yield node;
       }
     }
+  }
+
+  /**
+   * Process existing feed items in node
+   * @param {Element} node
+   */
+  function processFeedItems (node) {
+    const feedItems = Array.from(node.getElementsByClassName('feed__item'));
+    augmentFeedItems(feedItems);
   }
 }
