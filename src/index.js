@@ -108,7 +108,7 @@ async function dtfExpandFeed () {
    * @param {Element} node
    */
   function processFeedItems (node) {
-    const feedItems = Array.from(node.getElementsByClassName('feed__item'));
+    const feedItems = getFeedItems(node);
     augmentFeedItems(feedItems);
   }
 
@@ -119,5 +119,14 @@ async function dtfExpandFeed () {
   function observeFeedItems (node) {
     feedContainerObserver.disconnect();
     feedContainerObserver.observe(node, {childList: true});
+  }
+
+  /**
+   * Get all existing feed items in node
+   * @param {Element} node
+   * @returns {Element[]}
+   */
+  function getFeedItems (node) {
+    return Array.from(node.getElementsByClassName('feed__item'));
   }
 }
