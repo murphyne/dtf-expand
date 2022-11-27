@@ -7,6 +7,15 @@ export {
   augmentWithContent,
 };
 
+const config = {
+  classItemContent: 'content',
+  classItemContentShort: 'content--short',
+  classItemContentFull: 'content--full',
+  classItemHeader: 'content-header',
+  classItemTitle: 'content-title',
+  classItemLink: 'content-link',
+};
+
 function augmentFeedItems (items) {
   items.forEach(async function (feedItem) {
     let html = `
@@ -45,18 +54,18 @@ function augmentFeedItems (items) {
 async function augmentWithContent (item) {
   console.log('ExpandDTF: item %o', item);
 
-  var itemContent = item.getElementsByClassName('content')[0];
-  var itemHeader = item.getElementsByClassName('content-header')[0];
-  var itemTitle = item.getElementsByClassName('content-title')[0];
-  var itemLink = item.getElementsByClassName('content-link')[0];
+  var itemContent = item.getElementsByClassName(config.classItemContent)[0];
+  var itemHeader = item.getElementsByClassName(config.classItemHeader)[0];
+  var itemTitle = item.getElementsByClassName(config.classItemTitle)[0];
+  var itemLink = item.getElementsByClassName(config.classItemLink)[0];
 
   var responseContent = await retrieveContentFromApi(itemLink.href);
 
   itemContent.remove();
-  responseContent.classList.remove('content--short');
-  responseContent.classList.add('content--full');
+  responseContent.classList.remove(config.classItemContentShort);
+  responseContent.classList.add(config.classItemContentFull);
   itemHeader.insertAdjacentElement('afterend', responseContent);
-  itemLink.classList.remove('content-link');
+  itemLink.classList.remove(config.classItemLink);
   itemHeader.insertAdjacentElement('afterend', itemLink);
   itemLink.insertAdjacentElement('afterbegin', itemTitle);
 }
