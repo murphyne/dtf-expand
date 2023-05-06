@@ -50,8 +50,8 @@ function augmentFeedItems (items) {
       window.Air.get("module.andropov").refresh();
     });
 
-    let headerLeft = feedItem.querySelector('.content-header__left');
-    headerLeft.appendChild(aElement);
+    let headerInfo = feedItem.querySelector('.content-header__info');
+    headerInfo.appendChild(aElement);
   });
 }
 
