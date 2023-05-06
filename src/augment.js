@@ -63,18 +63,23 @@ function augmentFeedItems (items) {
 async function augmentWithContent (item) {
   console.log('ExpandDTF: item %o', item);
 
-  var itemContent = item.getElementsByClassName(config.classItemContent)[0];
+  var itemContentShort = item.getElementsByClassName(config.classItemContentShort)[0];
+  var itemContentFull = item.getElementsByClassName(config.classItemContentFull)[0];
   var itemHeader = item.getElementsByClassName(config.classItemHeader)[0];
   var itemTitle = item.getElementsByClassName(config.classItemTitle)[0];
   var itemLink = item.getElementsByClassName(config.classItemLink)[0];
 
-  var responseContent = await retrieveContentFromApi(itemLink.href);
+  if (!itemContentFull) {
+    var responseContent = await retrieveContentFromApi(itemLink.href);
 
-  itemContent.remove();
-  responseContent.classList.remove(config.classItemContentShort);
-  responseContent.classList.add(config.classItemContentFull);
-  itemHeader.insertAdjacentElement('afterend', responseContent);
-  itemLink.classList.remove(config.classItemLink);
-  itemHeader.insertAdjacentElement('afterend', itemLink);
-  itemLink.insertAdjacentElement('afterbegin', itemTitle);
+    itemContentShort.remove();
+    responseContent.classList.remove(config.classItemContentShort);
+    responseContent.classList.add(config.classItemContentFull);
+    itemHeader.insertAdjacentElement('afterend', responseContent);
+    itemLink.classList.remove(config.classItemLink);
+    itemHeader.insertAdjacentElement('afterend', itemLink);
+    itemLink.insertAdjacentElement('afterbegin', itemTitle);
+
+    itemContentFull = responseContent;
+  }
 }
