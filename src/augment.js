@@ -15,6 +15,7 @@ const config = {
   classItemContainer: 'content-container',
   classItemTitle: 'content-title',
   classItemLink: 'content-link',
+  classItemLinkInline: 'content-link-inline',
 };
 
 /**
@@ -83,14 +84,14 @@ async function augmentWithContent (item) {
   if (itemContentFull.hidden) {
     itemContentShort.hidden = true;
     itemContentFull.hidden = false;
-    itemLink.classList.remove(config.classItemLink);
+    itemLink.classList.add(config.classItemLinkInline);
     itemHeader.insertAdjacentElement('afterend', itemLink);
     itemLink.insertAdjacentElement('afterbegin', itemTitle);
   }
   else {
     itemContentShort.hidden = false;
     itemContentFull.hidden = true;
-    itemLink.classList.add(config.classItemLink);
+    itemLink.classList.remove(config.classItemLinkInline);
     itemContainer.insertAdjacentElement('afterend', itemLink);
     itemContainer.insertAdjacentElement('afterbegin', itemTitle);
   }

@@ -12,8 +12,19 @@ const config = {
   classFeedItem: 'feed__item',
 };
 
+const cssStyle = `
+.content-link-inline {
+  display: revert;
+  /* width: revert; */
+  /* height: revert; */
+  position: revert;
+}
+`;
+
 async function dtfExpandFeed () {
   "use strict";
+
+  GM_addStyle(cssStyle);
 
   //We need the pageWrapper to acquire feedContainer
   const pageWrapper = document.getElementById(config.idPageWrapper);
