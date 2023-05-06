@@ -72,7 +72,7 @@ async function augmentWithContent (item) {
   if (!itemContentFull) {
     var responseContent = await retrieveContentFromApi(itemLink.href);
 
-    itemContentShort.remove();
+    itemContentShort.hidden = true;
     responseContent.classList.remove(config.classItemContentShort);
     responseContent.classList.add(config.classItemContentFull);
     itemHeader.insertAdjacentElement('afterend', responseContent);
