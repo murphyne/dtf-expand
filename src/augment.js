@@ -12,6 +12,7 @@ const config = {
   classItemContentShort: 'content--short',
   classItemContentFull: 'content--full',
   classItemHeader: 'content-header',
+  classItemContainer: 'content-container',
   classItemTitle: 'content-title',
   classItemLink: 'content-link',
 };
@@ -66,20 +67,31 @@ async function augmentWithContent (item) {
   var itemContentShort = item.getElementsByClassName(config.classItemContentShort)[0];
   var itemContentFull = item.getElementsByClassName(config.classItemContentFull)[0];
   var itemHeader = item.getElementsByClassName(config.classItemHeader)[0];
+  var itemContainer = item.getElementsByClassName(config.classItemContainer)[0];
   var itemTitle = item.getElementsByClassName(config.classItemTitle)[0];
   var itemLink = item.getElementsByClassName(config.classItemLink)[0];
 
   if (!itemContentFull) {
     var responseContent = await retrieveContentFromApi(itemLink.href);
-
-    itemContentShort.hidden = true;
     responseContent.classList.remove(config.classItemContentShort);
     responseContent.classList.add(config.classItemContentFull);
+    responseContent.hidden = true;
     itemContentShort.insertAdjacentElement('afterend', responseContent);
+    itemContentFull = responseContent;
+  }
+
+  if (itemContentFull.hidden) {
+    itemContentShort.hidden = true;
+    itemContentFull.hidden = false;
     itemLink.classList.remove(config.classItemLink);
     itemHeader.insertAdjacentElement('afterend', itemLink);
     itemLink.insertAdjacentElement('afterbegin', itemTitle);
-
-    itemContentFull = responseContent;
+  }
+  else {
+    itemContentShort.hidden = false;
+    itemContentFull.hidden = true;
+    itemLink.classList.add(config.classItemLink);
+    itemContainer.insertAdjacentElement('afterend', itemLink);
+    itemContainer.insertAdjacentElement('afterbegin', itemTitle);
   }
 }
