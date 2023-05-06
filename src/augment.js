@@ -46,9 +46,9 @@ function augmentFeedItems (items) {
 
       //Apparently Air modules are run before augmentation fulfills.
       //Here, we force the modules to run again after the augmentation.
-      window.Air.get("module.quiz").refresh();
-      window.Air.get("module.andropov").refresh();
-      window.Air.get("module.gallery").refresh();
+      unsafeWindow.Air.get("module.quiz").refresh();
+      unsafeWindow.Air.get("module.andropov").refresh();
+      unsafeWindow.Air.get("module.gallery").refresh();
     });
 
     let headerInfo = feedItem.querySelector('.content-header__info');

@@ -8,7 +8,6 @@ let bannerText = `
 // @author       murphyne
 // @namespace    https://github.com/murphyne
 // @match        *://dtf.ru/*
-// @grant        none
 // ==/UserScript==
 `;
 
