@@ -3,7 +3,7 @@ import virtual from '@rollup/plugin-virtual';
 let bannerText = `
 // ==UserScript==
 // @name         DTF: Expand feed items
-// @version      0.5.0
+// @version      0.6.0
 // @description  Expand feed items!
 // @author       murphyne
 // @namespace    https://github.com/murphyne
