@@ -85,14 +85,14 @@ async function augmentWithContent (item) {
     itemContentShort.hidden = true;
     itemContentFull.hidden = false;
     itemLink.classList.add(config.classItemLinkInline);
-    itemHeader.insertAdjacentElement('afterend', itemLink);
-    itemLink.insertAdjacentElement('afterbegin', itemTitle);
+    itemLink && itemHeader.insertAdjacentElement('afterend', itemLink);
+    itemTitle && itemLink.insertAdjacentElement('afterbegin', itemTitle);
   }
   else {
     itemContentShort.hidden = false;
     itemContentFull.hidden = true;
     itemLink.classList.remove(config.classItemLinkInline);
-    itemContainer.insertAdjacentElement('afterend', itemLink);
-    itemContainer.insertAdjacentElement('afterbegin', itemTitle);
+    itemLink && itemContainer.insertAdjacentElement('afterend', itemLink);
+    itemTitle && itemContainer.insertAdjacentElement('afterbegin', itemTitle);
   }
 }
