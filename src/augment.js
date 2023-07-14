@@ -9,6 +9,7 @@ export {
 
 const config = {
   classItemContent: 'content',
+  classItemContentFeed: 'content-feed',
   classItemContentShort: 'content--short',
   classItemContentFull: 'content--full',
   classItemHeader: 'content-header',
@@ -65,6 +66,7 @@ function augmentFeedItems (items) {
 async function augmentWithContent (item) {
   console.log('ExpandDTF: item %o', item);
 
+  var itemContentFeed = item.getElementsByClassName(config.classItemContentFeed)[0];
   var itemContentShort = item.getElementsByClassName(config.classItemContentShort)[0];
   var itemContentFull = item.getElementsByClassName(config.classItemContentFull)[0];
   var itemHeader = item.getElementsByClassName(config.classItemHeader)[0];
@@ -73,7 +75,7 @@ async function augmentWithContent (item) {
   var itemLink = item.getElementsByClassName(config.classItemLink)[0];
 
   if (!itemContentFull) {
-    var responseContent = await retrieveContentFromApi(itemLink.href);
+    var responseContent = await retrieveContentFromApi(itemContentFeed.dataset.contentId);
     responseContent.classList.remove(config.classItemContentShort);
     responseContent.classList.add(config.classItemContentFull);
     responseContent.hidden = true;
