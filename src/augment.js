@@ -1,6 +1,6 @@
 import {
-  retrieveContentFromApi,
-} from '../src/retrieve-api.js';
+  retrieveContentFromSite,
+} from '../src/retrieve-site.js';
 
 export {
   augmentFeedItems,
@@ -75,7 +75,7 @@ async function augmentWithContent (item) {
   var itemLink = item.getElementsByClassName(config.classItemLink)[0];
 
   if (!itemContentFull) {
-    var responseContent = await retrieveContentFromApi(itemContentFeed.dataset.contentId);
+    var responseContent = await retrieveContentFromSite(itemLink.href);
     responseContent.classList.remove(config.classItemContentShort);
     responseContent.classList.add(config.classItemContentFull);
     responseContent.hidden = true;
