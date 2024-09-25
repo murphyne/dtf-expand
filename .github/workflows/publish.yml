@@ -11,10 +11,10 @@ jobs:
 
     steps:
     - name: Checkout the project
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Set up Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: '20.x'
 
@@ -31,14 +31,14 @@ jobs:
         artifactContentType: application/javascript
 
     - name: Upload userscript to artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         path: dist/dtf-expand.user.js
         name: dtf-expand.user.js
         retention-days: 5
 
     - name: Upload metadata to artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         path: dist/dtf-expand.meta.js
         name: dtf-expand.meta.js
