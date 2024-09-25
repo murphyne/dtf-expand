@@ -4,6 +4,7 @@
   "description": "Expand feed items!",
   "author": "murphyne",
   "license": "MIT",
+  "type": "module",
   "browser": "./src/main.js",
   "devDependencies": {
     "@rollup/plugin-virtual": "^2.0.3",
