@@ -8,8 +8,6 @@ export {
 };
 
 const config = {
-  classItemContent: 'content',
-  classItemContentFeed: 'content-feed',
   classItemContentShort: 'content--short',
   classItemContentFull: 'content--full',
   classItemHeader: 'content-header',
@@ -66,7 +64,6 @@ function augmentFeedItems (items) {
 async function augmentWithContent (item) {
   console.log('ExpandDTF: item %o', item);
 
-  var itemContentFeed = item.getElementsByClassName(config.classItemContentFeed)[0];
   var itemContentShort = item.getElementsByClassName(config.classItemContentShort)[0];
   var itemContentFull = item.getElementsByClassName(config.classItemContentFull)[0];
   var itemHeader = item.getElementsByClassName(config.classItemHeader)[0];
