@@ -24,22 +24,16 @@ const config = {
 function augmentFeedItems (items) {
   items.forEach(async function (feedItem) {
     let html = `
-      <a class="content-header-number content-header__item">
-        <div class="content-header-author__avatar">
-          <svg class="icon icon--favorite_marker" width="18" height="18" viewBox="0 0 24 24" style="fill:none;stroke-width:2;stroke:currentColor">
-            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-          </svg>
-        </div>
-        <div class="content-header-author__name">Весь текст</div>
-      </a>
+      <button class="button button--size-s button--type-minimal" type="button">
+        Весь текст
+      </button>
     `;
 
-    let aElement = await Promise.resolve(html)
+    let buttonElement = await Promise.resolve(html)
       .then(str => new DOMParser().parseFromString(str, 'text/html'))
       .then(doc => doc.body.firstElementChild);
 
-    aElement.addEventListener('click', async function (event) {
+    buttonElement.addEventListener('click', async function (event) {
       event.preventDefault();
 
       let feedItem = event.target.closest('.content');
@@ -53,7 +47,7 @@ function augmentFeedItems (items) {
     });
 
     let headerInfo = feedItem.querySelector('.content-header__actions');
-    headerInfo.appendChild(aElement);
+    headerInfo.appendChild(buttonElement);
   });
 }
 
