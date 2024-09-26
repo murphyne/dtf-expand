@@ -8,13 +8,13 @@ export {
 };
 
 const config = {
-  classItemContentShort: 'content--short',
-  classItemContentFull: 'content--full',
+  classItemContentShort: 'content__blocks',
+  classItemContentFull: 'content__blocks-full',
   classItemHeader: 'content-header',
-  classItemContainer: 'content-container',
+  classItemContainer: 'content__body',
   classItemTitle: 'content-title',
-  classItemLink: 'content-link',
-  classItemLinkInline: 'content-link-inline',
+  classItemLink: 'content__link',
+  classItemLinkInline: 'content__link-inline',
 };
 
 /**
@@ -42,7 +42,7 @@ function augmentFeedItems (items) {
     aElement.addEventListener('click', async function (event) {
       event.preventDefault();
 
-      let feedItem = event.target.closest('.feed__item');
+      let feedItem = event.target.closest('.content');
       await augmentWithContent(feedItem);
 
       //Apparently Air modules are run before augmentation fulfills.
@@ -52,7 +52,7 @@ function augmentFeedItems (items) {
       unsafeWindow.Air.get("module.gallery").refresh();
     });
 
-    let headerInfo = feedItem.querySelector('.content-header__info');
+    let headerInfo = feedItem.querySelector('.content-header__actions');
     headerInfo.appendChild(aElement);
   });
 }
