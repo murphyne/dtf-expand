@@ -2,6 +2,7 @@ export {
   selectorPageWrapper,
   selectorFeedContainer,
   selectorItem,
+  selectorItemContent,
   classItemContentShort,
   classItemContentFull,
   classItemHeader,
@@ -16,7 +17,8 @@ const selectorPageWrapper = '.view';
 const selectorFeedContainer = '.content-list';
 
 const selectorItem = '.content';
-const classItemContentShort = 'content__blocks';
+const selectorItemContent = '.content__blocks';
+const classItemContentShort = 'content__blocks-short';
 const classItemContentFull = 'content__blocks-full';
 const classItemHeader = 'content-header';
 const selectorItemHeaderButtons = '.content-header__actions';

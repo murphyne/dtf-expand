@@ -9,6 +9,7 @@ export {
 
 import {
   selectorItem,
+  selectorItemContent,
   classItemContentShort,
   classItemContentFull,
   classItemHeader,
@@ -44,6 +45,9 @@ function augmentFeedItems (items) {
       //TODO: Fix initialization of `.andropov-video` elements.
     });
 
+    let content = feedItem.querySelector(selectorItemContent);
+    content.classList.add(classItemContentShort);
+
     let headerInfo = feedItem.querySelector(selectorItemHeaderButtons);
     headerInfo.appendChild(buttonElement);
   });
@@ -65,7 +69,6 @@ async function augmentWithContent (item) {
 
   if (!itemContentFull) {
     var responseContent = await retrieveContentFromSite(itemLink.href);
-    responseContent.classList.remove(classItemContentShort);
     responseContent.classList.add(classItemContentFull);
     responseContent.hidden = true;
     itemContentShort.insertAdjacentElement('afterend', responseContent);

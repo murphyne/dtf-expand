@@ -3,7 +3,7 @@ export {
 }
 
 import {
-  classItemContentShort,
+  selectorItemContent,
 } from "./selectors.js";
 
 /**
@@ -15,7 +15,7 @@ async function retrieveContentFromSite (itemUrl) {
   var response = await fetch(itemUrl);
   var responseText = await response.text();
   var responseDom = new DOMParser().parseFromString(responseText, 'text/html');
-  var responseContent = responseDom.getElementsByClassName(classItemContentShort)[0];
+  var responseContent = responseDom.querySelector(selectorItemContent);
 
   return responseContent;
 }
