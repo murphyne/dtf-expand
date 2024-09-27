@@ -85,7 +85,7 @@ async function augmentWithContent (item) {
     itemContentShort.hidden = false;
     itemContentFull.hidden = true;
     itemLink.classList.remove(config.classItemLinkInline);
-    itemLink && itemContainer.insertAdjacentElement('afterend', itemLink);
+    itemLink && itemContainer.insertAdjacentElement('beforeend', itemLink);
     itemTitle && itemContainer.insertAdjacentElement('afterbegin', itemTitle);
   }
 }
