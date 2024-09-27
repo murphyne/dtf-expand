@@ -10,10 +10,11 @@ import {
   selectorPageWrapper,
   selectorFeedContainer,
   selectorItem,
+  classItemLinkInline,
 } from "./selectors.js";
 
 const cssStyle = `
-.content__link-inline {
+.${classItemLinkInline} {
   display: revert;
   /* width: revert; */
   /* height: revert; */
