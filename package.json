@@ -7,8 +7,8 @@
   "type": "module",
   "browser": "./src/main.js",
   "devDependencies": {
-    "@rollup/plugin-virtual": "^2.0.3",
-    "rollup": "^3.29.5"
+    "@rollup/plugin-virtual": "^3.0.2",
+    "rollup": "^4.22.5"
   },
   "scripts": {
     "build": "rollup -c rollup.conf.js"
