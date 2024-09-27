@@ -8,15 +8,13 @@ export {
 };
 
 const config = {
-  classItemContent: 'content',
-  classItemContentFeed: 'content-feed',
-  classItemContentShort: 'content--short',
-  classItemContentFull: 'content--full',
+  classItemContentShort: 'content__blocks',
+  classItemContentFull: 'content__blocks-full',
   classItemHeader: 'content-header',
-  classItemContainer: 'content-container',
+  classItemContainer: 'content__body',
   classItemTitle: 'content-title',
-  classItemLink: 'content-link',
-  classItemLinkInline: 'content-link-inline',
+  classItemLink: 'content__link',
+  classItemLinkInline: 'content__link-inline',
 };
 
 /**
@@ -26,25 +24,19 @@ const config = {
 function augmentFeedItems (items) {
   items.forEach(async function (feedItem) {
     let html = `
-      <a class="content-header-number content-header__item">
-        <div class="content-header-author__avatar">
-          <svg class="icon icon--favorite_marker" width="18" height="18" viewBox="0 0 24 24" style="fill:none;stroke-width:2;stroke:currentColor">
-            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-          </svg>
-        </div>
-        <div class="content-header-author__name">Весь текст</div>
-      </a>
+      <button class="button button--size-s button--type-minimal" type="button">
+        Весь текст
+      </button>
     `;
 
-    let aElement = await Promise.resolve(html)
+    let buttonElement = await Promise.resolve(html)
       .then(str => new DOMParser().parseFromString(str, 'text/html'))
       .then(doc => doc.body.firstElementChild);
 
-    aElement.addEventListener('click', async function (event) {
+    buttonElement.addEventListener('click', async function (event) {
       event.preventDefault();
 
-      let feedItem = event.target.closest('.feed__item');
+      let feedItem = event.target.closest('.content');
       await augmentWithContent(feedItem);
 
       //Apparently Air modules are run before augmentation fulfills.
@@ -54,8 +46,8 @@ function augmentFeedItems (items) {
       unsafeWindow.Air.get("module.gallery").refresh();
     });
 
-    let headerInfo = feedItem.querySelector('.content-header__info');
-    headerInfo.appendChild(aElement);
+    let headerInfo = feedItem.querySelector('.content-header__actions');
+    headerInfo.appendChild(buttonElement);
   });
 }
 
@@ -66,7 +58,6 @@ function augmentFeedItems (items) {
 async function augmentWithContent (item) {
   console.log('ExpandDTF: item %o', item);
 
-  var itemContentFeed = item.getElementsByClassName(config.classItemContentFeed)[0];
   var itemContentShort = item.getElementsByClassName(config.classItemContentShort)[0];
   var itemContentFull = item.getElementsByClassName(config.classItemContentFull)[0];
   var itemHeader = item.getElementsByClassName(config.classItemHeader)[0];
@@ -94,7 +85,7 @@ async function augmentWithContent (item) {
     itemContentShort.hidden = false;
     itemContentFull.hidden = true;
     itemLink.classList.remove(config.classItemLinkInline);
-    itemLink && itemContainer.insertAdjacentElement('afterend', itemLink);
+    itemLink && itemContainer.insertAdjacentElement('beforeend', itemLink);
     itemTitle && itemContainer.insertAdjacentElement('afterbegin', itemTitle);
   }
 }
