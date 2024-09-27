@@ -13,11 +13,5 @@ async function retrieveContentFromSite (itemUrl) {
   var responseDom = new DOMParser().parseFromString(responseText, 'text/html');
   var responseContent = responseDom.getElementsByClassName('content__blocks')[0];
 
-  responseContent.getElementsByClassName('l-fa-center')[0] &&
-    responseContent.getElementsByClassName('l-fa-center')[0].remove();
-
-  responseContent.classList.remove('content--full');
-  responseContent.classList.add('content--short');
-
   return responseContent;
 }
