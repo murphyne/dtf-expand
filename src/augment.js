@@ -7,15 +7,18 @@ export {
   augmentWithContent,
 };
 
-const config = {
-  classItemContentShort: 'content__blocks',
-  classItemContentFull: 'content__blocks-full',
-  classItemHeader: 'content-header',
-  classItemContainer: 'content__body',
-  classItemTitle: 'content-title',
-  classItemLink: 'content__link',
-  classItemLinkInline: 'content__link-inline',
-};
+import {
+  selectorItem,
+  selectorItemContent,
+  classItemContentShort,
+  classItemContentFull,
+  selectorItemHeader,
+  selectorItemHeaderButtons,
+  selectorItemContainer,
+  selectorItemTitle,
+  selectorItemLink,
+  classItemLinkInline,
+} from "./selectors.js";
 
 /**
  * @param {Array<Element>} items
@@ -36,13 +39,16 @@ function augmentFeedItems (items) {
     buttonElement.addEventListener('click', async function (event) {
       event.preventDefault();
 
-      let feedItem = event.target.closest('.content');
+      let feedItem = event.target.closest(selectorItem);
       await augmentWithContent(feedItem);
 
       //TODO: Fix initialization of `.andropov-video` elements.
     });
 
-    let headerInfo = feedItem.querySelector('.content-header__actions');
+    let content = feedItem.querySelector(selectorItemContent);
+    content.classList.add(classItemContentShort);
+
+    let headerInfo = feedItem.querySelector(selectorItemHeaderButtons);
     headerInfo.appendChild(buttonElement);
   });
 }
@@ -54,17 +60,16 @@ function augmentFeedItems (items) {
 async function augmentWithContent (item) {
   console.log('ExpandDTF: item %o', item);
 
-  var itemContentShort = item.getElementsByClassName(config.classItemContentShort)[0];
-  var itemContentFull = item.getElementsByClassName(config.classItemContentFull)[0];
-  var itemHeader = item.getElementsByClassName(config.classItemHeader)[0];
-  var itemContainer = item.getElementsByClassName(config.classItemContainer)[0];
-  var itemTitle = item.getElementsByClassName(config.classItemTitle)[0];
-  var itemLink = item.getElementsByClassName(config.classItemLink)[0];
+  var itemContentShort = item.getElementsByClassName(classItemContentShort)[0];
+  var itemContentFull = item.getElementsByClassName(classItemContentFull)[0];
+  var itemHeader = item.querySelector(selectorItemHeader);
+  var itemContainer = item.querySelector(selectorItemContainer);
+  var itemTitle = item.querySelector(selectorItemTitle);
+  var itemLink = item.querySelector(selectorItemLink);
 
   if (!itemContentFull) {
     var responseContent = await retrieveContentFromSite(itemLink.href);
-    responseContent.classList.remove(config.classItemContentShort);
-    responseContent.classList.add(config.classItemContentFull);
+    responseContent.classList.add(classItemContentFull);
     responseContent.hidden = true;
     itemContentShort.insertAdjacentElement('afterend', responseContent);
     itemContentFull = responseContent;
@@ -73,14 +78,14 @@ async function augmentWithContent (item) {
   if (itemContentFull.hidden) {
     itemContentShort.hidden = true;
     itemContentFull.hidden = false;
-    itemLink.classList.add(config.classItemLinkInline);
+    itemLink.classList.add(classItemLinkInline);
     itemLink && itemHeader.insertAdjacentElement('afterend', itemLink);
     itemTitle && itemLink.insertAdjacentElement('afterbegin', itemTitle);
   }
   else {
     itemContentShort.hidden = false;
     itemContentFull.hidden = true;
-    itemLink.classList.remove(config.classItemLinkInline);
+    itemLink.classList.remove(classItemLinkInline);
     itemLink && itemContainer.insertAdjacentElement('beforeend', itemLink);
     itemTitle && itemContainer.insertAdjacentElement('afterbegin', itemTitle);
   }
