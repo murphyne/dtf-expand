@@ -5,11 +5,11 @@ export {
   selectorItemContent,
   classItemContentShort,
   classItemContentFull,
-  classItemHeader,
+  selectorItemHeader,
   selectorItemHeaderButtons,
-  classItemContainer,
-  classItemTitle,
-  classItemLink,
+  selectorItemContainer,
+  selectorItemTitle,
+  selectorItemLink,
   classItemLinkInline,
 };
 
@@ -20,9 +20,9 @@ const selectorItem = '.content';
 const selectorItemContent = '.content__blocks';
 const classItemContentShort = 'content__blocks-short';
 const classItemContentFull = 'content__blocks-full';
-const classItemHeader = 'content-header';
+const selectorItemHeader = '.content-header';
 const selectorItemHeaderButtons = '.content-header__actions';
-const classItemContainer = 'content__body';
-const classItemTitle = 'content-title';
-const classItemLink = 'content__link';
+const selectorItemContainer = '.content__body';
+const selectorItemTitle = '.content-title';
+const selectorItemLink = '.content__link';
 const classItemLinkInline = 'content__link-inline';

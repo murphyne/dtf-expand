@@ -12,11 +12,11 @@ import {
   selectorItemContent,
   classItemContentShort,
   classItemContentFull,
-  classItemHeader,
+  selectorItemHeader,
   selectorItemHeaderButtons,
-  classItemContainer,
-  classItemTitle,
-  classItemLink,
+  selectorItemContainer,
+  selectorItemTitle,
+  selectorItemLink,
   classItemLinkInline,
 } from "./selectors.js";
 
@@ -62,10 +62,10 @@ async function augmentWithContent (item) {
 
   var itemContentShort = item.getElementsByClassName(classItemContentShort)[0];
   var itemContentFull = item.getElementsByClassName(classItemContentFull)[0];
-  var itemHeader = item.getElementsByClassName(classItemHeader)[0];
-  var itemContainer = item.getElementsByClassName(classItemContainer)[0];
-  var itemTitle = item.getElementsByClassName(classItemTitle)[0];
-  var itemLink = item.getElementsByClassName(classItemLink)[0];
+  var itemHeader = item.querySelector(selectorItemHeader);
+  var itemContainer = item.querySelector(selectorItemContainer);
+  var itemTitle = item.querySelector(selectorItemTitle);
+  var itemLink = item.querySelector(selectorItemLink);
 
   if (!itemContentFull) {
     var responseContent = await retrieveContentFromSite(itemLink.href);
