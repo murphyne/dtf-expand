@@ -6,11 +6,11 @@ import {
   augmentFeedItems,
 } from '../src/augment.js';
 
-const config = {
-  selectorPageWrapper: '.view',
-  selectorFeedContainer: '.content-list',
-  selectorFeedItem: '.content',
-};
+import {
+  selectorPageWrapper,
+  selectorFeedContainer,
+  selectorFeedItem,
+} from "./selectors.js";
 
 const cssStyle = `
 .content__link-inline {
@@ -27,7 +27,7 @@ async function dtfExpandFeed () {
   GM_addStyle(cssStyle);
 
   //We need the pageWrapper to acquire feedContainer
-  const pageWrapper = document.querySelector(config.selectorPageWrapper);
+  const pageWrapper = document.querySelector(selectorPageWrapper);
   if (!pageWrapper) {
     //It seems that a pageWrapper is always present on the page.
     //Yet, if we are unable to find it, we can't continue.
@@ -46,7 +46,7 @@ async function dtfExpandFeed () {
   //https://stackoverflow.com/q/35253565
 
   //Check if feedContainer is already present on the page
-  const feedContainer = pageWrapper.querySelector(config.selectorFeedContainer);
+  const feedContainer = pageWrapper.querySelector(selectorFeedContainer);
   if (feedContainer) {
     console.log('ExpandDTF: feedContainer found %o', feedContainer);
 
@@ -68,7 +68,7 @@ async function dtfExpandFeed () {
 
         if (node.nodeType !== Node.ELEMENT_NODE) continue;
 
-        const feedContainer = node.querySelector(config.selectorFeedContainer);
+        const feedContainer = node.querySelector(selectorFeedContainer);
         if (feedContainer) {
           console.log('ExpandDTF: feedContainer found %o', feedContainer);
 
@@ -91,7 +91,7 @@ async function dtfExpandFeed () {
 
       if (node.nodeType !== Node.ELEMENT_NODE) continue;
 
-      const feedContainer = node.querySelector(config.selectorFeedContainer);
+      const feedContainer = node.querySelector(selectorFeedContainer);
       if (feedContainer) {
         console.log('ExpandDTF: feedContainer found %o', feedContainer);
 
@@ -167,6 +167,6 @@ async function dtfExpandFeed () {
    * @returns {Element[]}
    */
   function getFeedItems (node) {
-    return Array.from(node.querySelectorAll(config.selectorFeedItem));
+    return Array.from(node.querySelectorAll(selectorFeedItem));
   }
 }
