@@ -8,9 +8,11 @@ export {
 };
 
 const config = {
+  selectorItem: '.content',
   classItemContentShort: 'content__blocks',
   classItemContentFull: 'content__blocks-full',
   classItemHeader: 'content-header',
+  selectorItemHeaderButtons: '.content-header__actions',
   classItemContainer: 'content__body',
   classItemTitle: 'content-title',
   classItemLink: 'content__link',
@@ -36,13 +38,13 @@ function augmentFeedItems (items) {
     buttonElement.addEventListener('click', async function (event) {
       event.preventDefault();
 
-      let feedItem = event.target.closest('.content');
+      let feedItem = event.target.closest(config.selectorItem);
       await augmentWithContent(feedItem);
 
       //TODO: Fix initialization of `.andropov-video` elements.
     });
 
-    let headerInfo = feedItem.querySelector('.content-header__actions');
+    let headerInfo = feedItem.querySelector(config.selectorItemHeaderButtons);
     headerInfo.appendChild(buttonElement);
   });
 }
