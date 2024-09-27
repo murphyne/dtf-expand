@@ -9,7 +9,7 @@ import {
 import {
   selectorPageWrapper,
   selectorFeedContainer,
-  selectorFeedItem,
+  selectorItem,
 } from "./selectors.js";
 
 const cssStyle = `
@@ -167,6 +167,6 @@ async function dtfExpandFeed () {
    * @returns {Element[]}
    */
   function getFeedItems (node) {
-    return Array.from(node.querySelectorAll(selectorFeedItem));
+    return Array.from(node.querySelectorAll(selectorItem));
   }
 }
