@@ -31,14 +31,14 @@ jobs:
         artifactContentType: application/javascript
 
     - name: Upload userscript to artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         path: dist/dtf-expand.user.js
         name: dtf-expand.user.js
         retention-days: 5
 
     - name: Upload metadata to artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         path: dist/dtf-expand.meta.js
         name: dtf-expand.meta.js
