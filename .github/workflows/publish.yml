@@ -35,6 +35,7 @@ jobs:
       with:
         path: dist/dtf-expand.user.js
         name: dtf-expand.user.js
+        archive: false
         retention-days: 5
 
     - name: Upload metadata to artifacts
@@ -42,4 +43,5 @@ jobs:
       with:
         path: dist/dtf-expand.meta.js
         name: dtf-expand.meta.js
+        archive: false
         retention-days: 5
